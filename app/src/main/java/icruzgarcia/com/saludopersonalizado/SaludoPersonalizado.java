@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class SaludoPersonalizado extends Activity {
@@ -12,6 +16,18 @@ public class SaludoPersonalizado extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saludo_personalizado);
+        Button miboton=(Button)findViewById(R.id.b_saludo);
+        miboton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Button boton= (Button) findViewById(R.id.b_saludo);
+                String saludo=getResources().getString(R.string.b_saludo);
+                EditText cadena= (EditText) findViewById(R.id.entrada);
+                TextView texto = (TextView) findViewById(R.id.saludo);
+                texto.setText(saludo+" "+cadena.getText().toString());
+
+            }
+        });
     }
 
 

@@ -15,9 +15,51 @@
         android:id="@+id/entrada"
         android:layout_gravity="center"
         />
+<RadioGroup
+   android:id="@+id/Radio"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:id="@+id/Saludoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hola"/>
 
+    <RadioButton
+        android:id="@+id/señor"
+        android:text="@string/senor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="75dp"
+         />
+    <RadioButton
+        android:id="@+id/señora"
+        android:text="@string/senora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        />
+    </RadioGroup>
 
-
+<CheckBox
+    android:layout_gravity="center"
+    android:text="@string/tiempo"
+    android:id="@+id/tiempo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+<TimePicker
+    android:id="@+id/hora"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"/>
+    <DatePicker
+        android:id="@+id/fecha"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/b_saludo"
         android:text="@string/b_saludo"
@@ -27,12 +69,14 @@
 
     <TextView
         android:layout_gravity="center"
-        android:layout_width="67dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/saludo"
         android:text=""
 
         />
+    
+
 
 
 </LinearLayout>

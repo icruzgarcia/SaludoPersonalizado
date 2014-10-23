@@ -1,13 +1,20 @@
 package icruzgarcia.com.saludopersonalizado;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 
 public class SaludoPersonalizado extends Activity {
@@ -16,15 +23,47 @@ public class SaludoPersonalizado extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saludo_personalizado);
-        Button miboton=(Button)findViewById(R.id.b_saludo);
-        miboton.setOnClickListener(new View.OnClickListener() {
+        Button miboton=(Button)findViewById(R.id.b_saludo);//Cogemos la id del boton del layout
+        miboton.setOnClickListener(new View.OnClickListener() {//Creamos el listener del evento y su acción
             @Override
             public void onClick(View view) {
-                Button boton= (Button) findViewById(R.id.b_saludo);
-                String saludo=getResources().getString(R.string.b_saludo);
-                EditText cadena= (EditText) findViewById(R.id.entrada);
-                TextView texto = (TextView) findViewById(R.id.saludo);
-                texto.setText(saludo+" "+cadena.getText().toString());
+                EditText cadena= (EditText) findViewById(R.id.entrada);//Cogemos la id de la caja de texto
+                if ("".equals(cadena.getText().toString().trim())){
+                    // mostrar dialogo
+                    //showAlert();
+                    //mostrar toast
+                    showToast();
+                    return;
+                }
+                String textosaludo="";
+                Button boton= (Button) findViewById(R.id.b_saludo);//Volvemos a coger la id del boton
+                String saludo=getResources().getString(R.string.b_saludo);//Cogemos el string que aparece en el botón
+
+                TextView texto = (TextView) findViewById(R.id.saludo);//Cogemos la id del texto de salida
+                RadioGroup radio=(RadioGroup) findViewById(R.id.Radio);//Cogemos la id del grupo de botones radio
+                textosaludo=textosaludo+saludo;
+                if (radio.getCheckedRadioButtonId()==R.id.señor){
+                    textosaludo=textosaludo+" "+getResources().getString(R.string.senor).toLowerCase();
+                }else{
+                    textosaludo=textosaludo+" "+getResources().getString(R.string.senora).toLowerCase();
+                }
+                textosaludo=textosaludo+" "+cadena.getText().toString();
+                CheckBox tiempo=(CheckBox)findViewById(R.id.tiempo);
+                if(tiempo.isChecked()){
+                    DatePicker fecha=(DatePicker)findViewById(R.id.fecha);
+                    String muestraf=fecha.getDayOfMonth()+"/"+fecha.getMonth()+"/"+fecha.getYear();
+                    TimePicker hora=(TimePicker)findViewById(R.id.hora);
+                    muestraf=muestraf+" "+hora.getCurrentHour()+":"+hora.getCurrentMinute();
+                    textosaludo=textosaludo+" "+muestraf;
+
+
+                }
+
+
+                texto.setText(textosaludo);//Introducimos el string que está en la caja de texto
+
+
+
 
             }
         });
@@ -49,4 +88,13 @@ public class SaludoPersonalizado extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    protected void showToast() {
+        Context context = getApplicationContext();
+        CharSequence text = getResources().getString(R.string.noNameMsg);
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
 }

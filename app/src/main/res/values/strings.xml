@@ -6,6 +6,10 @@
     <string name="action_settings">Settings</string>
     <string name="entrada"></string>
     <string name="b_saludo">Hola</string>
-    <string name="hola">hola</string>
+    <string name="hola">Saludo</string>
+    <string name="senor">Sr</string>
+    <string name="senora">Sra</string>
+    <string name="tiempo">¿Mostrar hora y fecha?</string>
+    <string name="noNameMsg">Introduce un nombre</string>
 
 </resources>

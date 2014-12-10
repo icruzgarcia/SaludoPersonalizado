@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -26,13 +27,13 @@ public class SaludoPersonalizado extends Activity {
         Button miboton=(Button)findViewById(R.id.b_saludo);//Cogemos la id del boton del layout
         miboton.setOnClickListener(new View.OnClickListener() {//Creamos el listener del evento y su acción
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {//Defino el metodo para accionar el evento.
                 EditText cadena= (EditText) findViewById(R.id.entrada);//Cogemos la id de la caja de texto
                 if ("".equals(cadena.getText().toString().trim())){
                     // mostrar dialogo
                     //showAlert();
                     //mostrar toast
-                    showToast();
+                    showToast("Introduce texto");
                     return;
                 }
                 String textosaludo="";
@@ -48,7 +49,7 @@ public class SaludoPersonalizado extends Activity {
                     textosaludo=textosaludo+" "+getResources().getString(R.string.senora).toLowerCase();
                 }
                 textosaludo=textosaludo+" "+cadena.getText().toString();
-                CheckBox tiempo=(CheckBox)findViewById(R.id.tiempo);
+                CheckBox tiempo=(CheckBox)findViewById(R.id.tiempo);//Aquí declaramos el checkbox y realizamos la comparación
                 if(tiempo.isChecked()){
                     DatePicker fecha=(DatePicker)findViewById(R.id.fecha);
                     String muestraf=fecha.getDayOfMonth()+"/"+fecha.getMonth()+"/"+fecha.getYear();
@@ -66,6 +67,20 @@ public class SaludoPersonalizado extends Activity {
 
 
             }
+        });
+
+        CheckBox checkbox=(CheckBox)findViewById(R.id.tiempo);
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView,boolean isChecked){//Defino el evento del checkbox para ver el dia y la hora
+            int visibility=isChecked ? View.VISIBLE : View.GONE;
+            View view =findViewById(R.id.hora);
+            view.setVisibility(visibility);
+            view=findViewById(R.id.fecha);
+            view.setVisibility(visibility);
+
+        }
+
         });
     }
 
@@ -89,11 +104,10 @@ public class SaludoPersonalizado extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void showToast() {
+    protected void showToast(String msg) {
         Context context = getApplicationContext();
-        CharSequence text = getResources().getString(R.string.noNameMsg);
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
+        int duracion=Toast.LENGTH_SHORT;
+        Toast toast= Toast.makeText(context,msg,duracion);
         toast.show();
     }
 

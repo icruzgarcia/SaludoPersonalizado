@@ -1,25 +1,29 @@
 package icruzgarcia.com.saludopersonalizado;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 
-public class SaludoPersonalizado extends Activity {
-
+public class SaludoPersonalizado extends Activity{
+    String saludo = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,21 +41,41 @@ public class SaludoPersonalizado extends Activity {
                     return;
                 }
                 String textosaludo = "";
-                String saludo = "";
-                RadioGroup radioD = (RadioGroup) findViewById(R.id.RadioDes);
+
+
                 Button boton = (Button) findViewById(R.id.b_saludo);//Volvemos a coger la id del boton
+                //RadioGroup radioD = (RadioGroup) findViewById(R.id.RadioDes); //Cogemos el id del grupo de botones para utilizarlo luego en el saludo
                 //String saludo = getResources().getString(R.string.b_saludo);//Cogemos el string que aparece en el botón
-                if (radioD.getCheckedRadioButtonId() == R.id.hola) {
+               /* if (radioD.getCheckedRadioButtonId() == R.id.hola) {
 
                     saludo = getResources().getString(R.string.saludo);
 
 
                 } else {
-                    
+
                     saludo = getResources().getString(R.string.despedida);
 
 
-                }
+                }*/
+
+
+                Spinner spin=(Spinner)findViewById(R.id.spinner);//Cogemos el iD del spinner
+
+                ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(getBaseContext(), R.array.saludos,android.R.layout.simple_spinner_item); //Creamos un adaptador para el spinner
+                adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//Decimos que tipo de spinner
+                spin.setAdapter(adaptador);//Añadimos el adaptador al spinner para visualizarlo
+
+                spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { //Recogemos el item seleccionado y lo pasamos a String
+                    @Override
+                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                        saludo=arg0.getSelectedItem().toString();
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> arg0) {
+                    }
+                });
+
+
                 TextView texto = (TextView) findViewById(R.id.saludo);//Cogemos la id del texto de salida
                 RadioGroup radio = (RadioGroup) findViewById(R.id.Radio);//Cogemos la id del grupo de botones radio
                 textosaludo = textosaludo + saludo;
@@ -121,5 +145,8 @@ public class SaludoPersonalizado extends Activity {
         Toast toast = Toast.makeText(context, msg, duracion);
         toast.show();
     }
+
+
+
 
 }

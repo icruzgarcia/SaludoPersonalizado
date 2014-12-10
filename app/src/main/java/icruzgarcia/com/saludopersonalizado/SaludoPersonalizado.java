@@ -24,38 +24,51 @@ public class SaludoPersonalizado extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saludo_personalizado);
-        Button miboton=(Button)findViewById(R.id.b_saludo);//Cogemos la id del boton del layout
+        Button miboton = (Button) findViewById(R.id.b_saludo);//Cogemos la id del boton del layout
         miboton.setOnClickListener(new View.OnClickListener() {//Creamos el listener del evento y su acción
             @Override
             public void onClick(View view) {//Defino el metodo para accionar el evento.
-                EditText cadena= (EditText) findViewById(R.id.entrada);//Cogemos la id de la caja de texto
-                if ("".equals(cadena.getText().toString().trim())){
+                EditText cadena = (EditText) findViewById(R.id.entrada);//Cogemos la id de la caja de texto
+                if ("".equals(cadena.getText().toString().trim())) {
                     // mostrar dialogo
                     //showAlert();
                     //mostrar toast
                     showToast("Introduce texto");
                     return;
                 }
-                String textosaludo="";
-                Button boton= (Button) findViewById(R.id.b_saludo);//Volvemos a coger la id del boton
-                String saludo=getResources().getString(R.string.b_saludo);//Cogemos el string que aparece en el botón
+                String textosaludo = "";
+                String saludo = "";
+                RadioGroup radioD = (RadioGroup) findViewById(R.id.RadioDes);
+                Button boton = (Button) findViewById(R.id.b_saludo);//Volvemos a coger la id del boton
+                //String saludo = getResources().getString(R.string.b_saludo);//Cogemos el string que aparece en el botón
+                if (radioD.getCheckedRadioButtonId() == R.id.hola) {
 
-                TextView texto = (TextView) findViewById(R.id.saludo);//Cogemos la id del texto de salida
-                RadioGroup radio=(RadioGroup) findViewById(R.id.Radio);//Cogemos la id del grupo de botones radio
-                textosaludo=textosaludo+saludo;
-                if (radio.getCheckedRadioButtonId()==R.id.señor){
-                    textosaludo=textosaludo+" "+getResources().getString(R.string.senor).toLowerCase();
-                }else{
-                    textosaludo=textosaludo+" "+getResources().getString(R.string.senora).toLowerCase();
+                    saludo = getResources().getString(R.string.saludo);
+
+
+                } else {
+                    
+                    saludo = getResources().getString(R.string.despedida);
+
+
                 }
-                textosaludo=textosaludo+" "+cadena.getText().toString();
-                CheckBox tiempo=(CheckBox)findViewById(R.id.tiempo);//Aquí declaramos el checkbox y realizamos la comparación
-                if(tiempo.isChecked()){
-                    DatePicker fecha=(DatePicker)findViewById(R.id.fecha);
-                    String muestraf=fecha.getDayOfMonth()+"/"+fecha.getMonth()+"/"+fecha.getYear();
-                    TimePicker hora=(TimePicker)findViewById(R.id.hora);
-                    muestraf=muestraf+" "+hora.getCurrentHour()+":"+hora.getCurrentMinute();
-                    textosaludo=textosaludo+" "+muestraf;
+                TextView texto = (TextView) findViewById(R.id.saludo);//Cogemos la id del texto de salida
+                RadioGroup radio = (RadioGroup) findViewById(R.id.Radio);//Cogemos la id del grupo de botones radio
+                textosaludo = textosaludo + saludo;
+                if (radio.getCheckedRadioButtonId() == R.id.señor) {
+                    textosaludo = textosaludo + " " + getResources().getString(R.string.senor).toLowerCase();
+                } else {
+                    textosaludo = textosaludo + " " + getResources().getString(R.string.senora).toLowerCase();
+                }
+
+                textosaludo = textosaludo + " " + cadena.getText().toString();
+                CheckBox tiempo = (CheckBox) findViewById(R.id.tiempo);//Aquí declaramos el checkbox y realizamos la comparación
+                if (tiempo.isChecked()) {
+                    DatePicker fecha = (DatePicker) findViewById(R.id.fecha);
+                    String muestraf = fecha.getDayOfMonth() + "/" + fecha.getMonth() + "/" + fecha.getYear();
+                    TimePicker hora = (TimePicker) findViewById(R.id.hora);
+                    muestraf = muestraf + " " + hora.getCurrentHour() + ":" + hora.getCurrentMinute();
+                    textosaludo = textosaludo + " " + muestraf;
 
 
                 }
@@ -64,22 +77,20 @@ public class SaludoPersonalizado extends Activity {
                 texto.setText(textosaludo);//Introducimos el string que está en la caja de texto
 
 
-
-
             }
         });
 
-        CheckBox checkbox=(CheckBox)findViewById(R.id.tiempo);
-        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView,boolean isChecked){//Defino el evento del checkbox para ver el dia y la hora
-            int visibility=isChecked ? View.VISIBLE : View.GONE;
-            View view =findViewById(R.id.hora);
-            view.setVisibility(visibility);
-            view=findViewById(R.id.fecha);
-            view.setVisibility(visibility);
+        CheckBox checkbox = (CheckBox) findViewById(R.id.tiempo);
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {//Defino el evento del checkbox para ver el dia y la hora
+                int visibility = isChecked ? View.VISIBLE : View.GONE;
+                View view = findViewById(R.id.hora);
+                view.setVisibility(visibility);
+                view = findViewById(R.id.fecha);
+                view.setVisibility(visibility);
 
-        }
+            }
 
         });
     }
@@ -106,8 +117,8 @@ public class SaludoPersonalizado extends Activity {
 
     protected void showToast(String msg) {
         Context context = getApplicationContext();
-        int duracion=Toast.LENGTH_SHORT;
-        Toast toast= Toast.makeText(context,msg,duracion);
+        int duracion = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, msg, duracion);
         toast.show();
     }
 
